@@ -27,3 +27,7 @@ Now you need to install the browser plugin. For now, only Chrome is supported. T
 
 ### Running Snap4Arduino on the web
 For now, you need to serve the ``snap`` folder at port ``8080`` from your local machine. There are several ways to do so, pick your favourite here: https://gist.github.com/willurd/5720255
+
+Finally, visit ``http://localhost:8080/s4a-plugin.html``.
+
+**Note**: Most stuff does _NOT_ work yet. Please be patient, this is work in progress.
