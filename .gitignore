@@ -1,4 +1,3 @@
-chrome/node_modules/
 snap/*
 !snap/plugin/
 !snap/s4a-plugin.html
