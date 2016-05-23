@@ -1,0 +1,9 @@
+snap/*
+!snap/plugin/
+!snap/s4a-plugin.html
+snap/Costumes/
+snap/Sounds/
+snap/Backgounds/
+snap/build/
+snap/s4a/
+chrome/node_modules
