@@ -15,18 +15,20 @@ Parser.prototype.parseMessage = function(message, chromePort) {
 
 Parser.prototype.getDevices = function (chromePort) {
     chrome.serial.getDevices(function (devices) {
-        chromePort.postMessage({ devices: devices });
+        chromePort.postMessage({ command: 'gotDevices', args: devices });
     });
 };
 
 Parser.prototype.connectBoard = function (serialPort, chromePort) {
     try {
-        var board = new Firmata.Board(serialPort)
+        var board = new Firmata.Board(serialPort, function() {
+            chromePort.postMessage({ command: 'attemptedConnection', args: board });
+        });
         Boards.push(board);
-        chromePort.postMessage({ board: board });
+        console.log(board);
     } catch (err) {
         console.log(err);
-        chromePort.postMessage({ error: err });
+        chromePort.postMessage({ command: 'attemptedConnection', args: [ null, err ] });
     }
 }
 
@@ -34,4 +36,3 @@ chrome.runtime.onConnectExternal.addListener(function (chromePort) {
     var parser = new Parser();
     chromePort.onMessage.addListener(function (message) { parser.parseMessage(message, chromePort) });
 });
-
