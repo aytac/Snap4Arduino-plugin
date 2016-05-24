@@ -1,38 +1,75 @@
-var Firmata = require('./firmata.js');
-var Boards = [];
+var Firmata = require('./firmata.js'),
+    Boards = {},
+    lastId = 0,
+    dispatcher = new Dispatcher(),
+    serialPorts;
 
-function Parser() {};
+setInterval(
+        function () {
+            chrome.serial.getDevices(function (devices) { serialPorts = devices });
+        },
+        1500
+        );
 
-Parser.prototype.parseMessage = function(message, chromePort) {
-    try {
-        this[message.command].apply(this, (message.args || []).concat(chromePort));
-    } catch (err) {
-        console.error('invalid message!');
-        console.error(message);
-        console.error(err);
-    }
-};
-
-Parser.prototype.getDevices = function (chromePort) {
-    chrome.serial.getDevices(function (devices) {
-        chromePort.postMessage({ command: 'gotDevices', args: devices });
-    });
-};
-
-Parser.prototype.connectBoard = function (serialPort, chromePort) {
-    try {
-        var board = new Firmata.Board(serialPort, function() {
-            chromePort.postMessage({ command: 'attemptedConnection', args: board });
+chrome.runtime.onMessageExternal.addListener(
+        function(message, sender, sendResponse) {
+            sendResponse(dispatcher[message.command].apply(this, (message.args || [])));
         });
-        Boards.push(board);
-        console.log(board);
-    } catch (err) {
-        console.log(err);
-        chromePort.postMessage({ command: 'attemptedConnection', args: [ null, err ] });
-    }
-}
 
-chrome.runtime.onConnectExternal.addListener(function (chromePort) {
-    var parser = new Parser();
-    chromePort.onMessage.addListener(function (message) { parser.parseMessage(message, chromePort) });
-});
+
+// Command dispatcher
+
+function Dispatcher() {};
+
+Dispatcher.prototype.getDevices = function () {
+    return serialPorts;
+};
+
+Dispatcher.prototype.connectBoard = function (serialPort) {
+    var board = new Firmata.Board(
+            serialPort,
+            function() {
+                Boards[lastId] = board;
+                lastId ++;
+            });
+    board.id = lastId;
+    return board.id;
+};
+
+Dispatcher.prototype.getBoard = function (boardId) {
+    return Boards[boardId];
+};
+
+Dispatcher.prototype.closeSerial = function (boardId) {
+    Boards[boardId].reset();
+    Boards[boardId].sp.close();
+    Boards[boardId] = null;
+};
+
+Dispatcher.prototype.pinMode = function (boardId, pin, mode) {
+    Boards[boardId].pinMode(pin, mode);
+};
+
+Dispatcher.prototype.digitalWrite = function (boardId, pin, value) {
+    Boards[boardId].digitalWrite(pin, value);
+};
+
+Dispatcher.prototype.servoWrite = function (boardId, pin, value) {
+    Boards[boardId].servoWrite(pin, value);
+};
+
+Dispatcher.prototype.analogWrite = function (boardId, pin, value) {
+    Boards[boardId].analogWrite(pin, value);
+};
+
+Dispatcher.prototype.digitalRead = function (boardId, pin, sendResponse) {
+    var board = Boards[boardId];
+    board.digitalRead( pin, function (value) { board.pins[pin].value = value });
+    return board.pins[pin].value;
+};
+
+Dispatcher.prototype.analogRead = function (boardId, pin, sendResponse) {
+    var board = Boards[boardId];
+    board.analogRead( pin, function (value) { board.pins[board.analogPins[pin]].value = value });
+    return board.pins[board.analogPins[pin]].value;
+};

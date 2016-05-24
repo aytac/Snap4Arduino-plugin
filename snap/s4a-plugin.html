@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Snap4Arduino @AppVersion</title>
         <link rel="shortcut icon" href="http://snap.berkeley.edu/fav3.gif" type="image/gif">
-        <script type="text/javascript" src="plugin/init.js"></script>
+        <script type="text/javascript" src="plugin/plugin.js"></script>
         <script type="text/javascript" src="morphic.js"></script>
         <script type="text/javascript" src="s4a/morphic.js"></script>
         <script type="text/javascript" src="plugin/morphic.js"></script>
@@ -13,10 +13,11 @@
         <script type="text/javascript" src="s4a/blocks.js"></script>
         <script type="text/javascript" src="threads.js"></script>
         <script type="text/javascript" src="s4a/threads.js"></script>
+        <script type="text/javascript" src="plugin/threads.js"></script>
         <script type="text/javascript" src="objects.js"></script>
         <script type="text/javascript" src="s4a/objects.js"></script>
         <script type="text/javascript" src="s4a/arduino.js"></script>
-        <script type="text/javascript" src="arduino.js"></script>
+        <script type="text/javascript" src="plugin/arduino.js"></script>
         <script type="text/javascript" src="gui.js"></script>
         <script type="text/javascript" src="s4a/gui.js"></script>
         <script type="text/javascript" src="paint.js"></script>
@@ -39,7 +40,8 @@
             window.onload = function () {
                 world = new WorldMorph(document.getElementById('world'));
 
-                world.Arduino.keepAlive = true;
+                // keepAlive should be handled at the plugin side
+                world.Arduino.keepAlive = false;
 
                 ide = new IDE_Morph();
                 ide.openIn(world);
