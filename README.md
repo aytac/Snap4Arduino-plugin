@@ -22,12 +22,11 @@ mv Snap4Arduino/snap/* snap/
 Now you need to install the browser plugin. For now, only Chrome is supported. To do so:
 
 * Go to ``chrome://extensions`` in your Chrome browser
-* Enable ``developer mode`` (top right)
-* Click on ``Load unpacked extension…`` and navigate to the ``chrome`` subfolder inside ``Snap4Arduino-plugin``
+* Drag and drop the ``Snap4Arduino.crx`` extension file into your browser window
 
 ### Running Snap4Arduino on the web
 For now, you need to serve the ``snap`` folder at port ``8080`` from your local machine. There are several ways to do so, pick your favourite here: https://gist.github.com/willurd/5720255
 
 Finally, visit ``http://localhost:8080/s4a-plugin.html``.
 
-**Note**: Most stuff does _NOT_ work yet. Please be patient, this is work in progress.
+**Note**: Some stuff does not work yet and you may experience random disconnections. From time to time you'll need to reset the board right after starting a connection attempt for it tu succeed. Please be patient, this is work in progress.
