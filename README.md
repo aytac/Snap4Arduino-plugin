@@ -3,6 +3,10 @@ A web-based Snap4Arduino version that uses a browser plugin to communicate with 
 
 ## Online Test Version
 
+### Loading Firmata into the board
+
+As with the desktop Snap4Arduino version, you need to have Firmata loaded into your board.
+
 ### Downloading and installing the plugin
 
 The Chrome extension can be downloaded from [here](http://46.140.176.36/Snap4Arduino.crx). Please note that you cannot install it straight from the downloaded file icon. Instead you need to:
@@ -14,7 +18,9 @@ The Chrome extension can be downloaded from [here](http://46.140.176.36/Snap4Ard
 
 Just visit [this](http://46.140.176.36/) site. Everything should feel the same as with your regular desktop-based Snap4Arduino! :)
 
-## For Developers
+-----------
+
+## Only for Developers
 
 ### Preparing the repo
 First of all, clone this repo:
