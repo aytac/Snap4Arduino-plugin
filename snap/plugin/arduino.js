@@ -26,6 +26,10 @@ Arduino.prototype.attemptConnection = function () {
     }
 };
 
+window.onunload = function (evt) {
+    ide.sprites.asArray().forEach(function (each) { each.arduino.disconnect(true); });
+};
+
 Arduino.prototype.connect = function (port) {
     var myself = this;
 

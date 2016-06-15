@@ -46,6 +46,8 @@
                 ide = new IDE_Morph();
                 ide.openIn(world);
 
+                document.title = document.title.replace("@AppVersion", ide.version());
+
                 ide.inform = function(title, message, callback) { 
                     var myself = this;
                     if (!myself.informing) {
@@ -59,8 +61,10 @@
                         box.inform(title, message, world)
                     }
                 };
+
                 setInterval(loop, 1);
             };
+
 
             function loop() {
                 world.doOneCycle();
