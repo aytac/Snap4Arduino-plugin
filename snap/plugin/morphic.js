@@ -3,7 +3,7 @@ WorldMorph.prototype.Arduino.firmata = firmata;
 WorldMorph.prototype.Arduino.getSerialPorts = function (callback) {
     var myself = this,
     portList = [],
-    portcheck = /usb|DevB|rfcomm|acm|^com/i; // Not sure about rfcomm! We must dig further how bluetooth works in Gnu/Linux
+    portcheck = /usb|DevB|rfcomm|acm|^com/i;
 
     chrome.serial.getDevices(function (devices) { 
         devices.forEach(function (device) { 
@@ -15,3 +15,5 @@ WorldMorph.prototype.Arduino.getSerialPorts = function (callback) {
     });
 };
 
+// Reverting some changes
+WorldMorph.prototype.init = WorldMorph.prototype.originalInit;
