@@ -9,7 +9,7 @@ As with the desktop Snap4Arduino version, you need to have Firmata loaded into y
 
 ### Downloading and installing the plugin
 
-The Chrome extension can be downloaded from [here](http://46.140.176.36/Snap4Arduino.crx). Please note that you cannot install it straight from the downloaded file icon. Instead you need to:
+The Chrome extension can be downloaded from [here](https://github.com/bromagosa/Snap4Arduino-plugin/blob/master/Snap4Arduino.crx?raw=true). Please note that you cannot install it straight from the downloaded file icon. Instead you need to:
 
 * Go to ``chrome://extensions`` in your Chrome browser
 * Drag and drop the ``Snap4Arduino.crx`` extension file into your browser window
